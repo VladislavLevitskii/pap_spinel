@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pap_spinel"
+version = "0.0.1"
+description = "Spinel protocol over UART/TCP for Papouch MCUs."
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "VladislavLevitskii", email = "vladlevitskii@gmail.com" }
+]
+dependencies = [
+    "pyserial>=3.5",
+    "pyserial-asyncio>=0.6",
+]
+
+[project.urls]
+Source = "https://github.com/VladislavLevitskii/pap_spinel"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pap_spinel"]
