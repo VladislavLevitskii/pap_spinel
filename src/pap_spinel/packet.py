@@ -43,7 +43,15 @@ class Packet97:
         """SUM byte = 0xFF - (sum of PRE..last DATA byte) & 0xFF."""
         hi = (self.num >> 8) & 0xFF
         lo = self.num & 0xFF
-        s = PRE + FRM + hi + lo + (self.adr & 0xFF) + (self.sig & 0xFF) + (self.inst & 0xFF)
+        s = (
+            PRE
+            + FRM
+            + hi
+            + lo
+            + (self.adr & 0xFF)
+            + (self.sig & 0xFF)
+            + (self.inst & 0xFF)
+        )
         for b in self.data:
             s += b & 0xFF
         return 0xFF - (s & 0xFF)

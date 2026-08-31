@@ -127,7 +127,9 @@ class SpinelClient:
         allowed_acks: tuple[int, ...] = (ACK_OK,),
     ) -> Packet97:
         """Send + require ACK with code in ``allowed_acks`` (default just 0x00 Ok). Raises SpinelNakError."""
-        resp = await self.request(addr=addr, inst=inst, data=data, sig=sig, timeout=timeout)
+        resp = await self.request(
+            addr=addr, inst=inst, data=data, sig=sig, timeout=timeout
+        )
         if not resp.is_ack():
             return resp  # Not an ACK frame, return as-is (caller decides)
         code = resp.ack_code()
@@ -164,7 +166,9 @@ class SpinelClient:
                         if asyncio.iscoroutine(result):
                             asyncio.create_task(result)
                     else:
-                        logger.debug("RX unmatched SIG=0x%02X INST=0x%02X", pkt.sig, pkt.inst)
+                        logger.debug(
+                            "RX unmatched SIG=0x%02X INST=0x%02X", pkt.sig, pkt.inst
+                        )
         except asyncio.CancelledError:
             raise
         except Exception:
