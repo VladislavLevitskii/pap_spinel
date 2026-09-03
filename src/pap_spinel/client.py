@@ -15,7 +15,7 @@ from typing import Self
 
 from .ack import ACK_OK, ack_name
 from .errors import SpinelNakError, SpinelTimeoutError, SpinelTransportError
-from .packet import INST_INFO, Packet97, Packet97StreamParser
+from .packet import INST_INFO, INST_LOC, INST_SN, Packet97, Packet97StreamParser
 from .transport import SpinelTransport
 
 logger = logging.getLogger("pap_spinel")
@@ -140,6 +140,18 @@ class SpinelClient:
     async def info(self, addr: int = 0xFE, *, timeout: float | None = None) -> Packet97:
         """Send INFO (INST 0xF3) and wait for reply."""
         return await self.request(addr=addr, inst=INST_INFO, timeout=timeout)
+
+    async def man_data(
+        self, addr: int = 0xFE, *, timeout: float | None = None
+    ) -> Packet97:
+        """Send manufacturing data instruction (0xFA) and wait for reply."""
+        return await self.request(addr=addr, inst=INST_SN, timeout=timeout)
+
+    async def user_data(
+        self, addr: int = 0xFE, *, timeout: float | None = None
+    ) -> Packet97:
+        """Send user data instruction (0xF2) and wait for reply."""
+        return await self.request(addr=addr, inst=INST_LOC, timeout=timeout)
 
     # ---- reader loop ----------------------------------------------------
 

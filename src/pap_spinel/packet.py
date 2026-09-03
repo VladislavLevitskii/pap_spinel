@@ -18,7 +18,9 @@ FRM = 0x61  # 97 decimal — 'a'
 CR = 0x0D
 MIN_LEN = 9  # header(4) + ADR + SIG + INST + SUM + CR
 ADR_BROADCAST = 0xFE
+INST_LOC = 0xF2
 INST_INFO = 0xF3
+INST_SN = 0xFA
 
 
 @dataclass
