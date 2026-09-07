@@ -116,6 +116,7 @@ class Packet97:
     # ---- helpers --------------------------------------------------------
 
     def hex(self, sep: str = " ") -> str:
+        """Return HEX representation."""
         return self.to_bytes().hex(sep).upper()
 
     def is_ack(self) -> bool:
@@ -123,9 +124,10 @@ class Packet97:
         return self.inst <= 0x0F
 
     def ack_code(self) -> int | None:
-        if not self.is_ack() or not self.data:
-            return None
-        return self.data[0]
+        """Return ACK code or None if it has no ACK (request packet)."""
+        if self.is_ack():
+            return self.inst
+        return None
 
 
 # ---------------------------------------------------------------------------
