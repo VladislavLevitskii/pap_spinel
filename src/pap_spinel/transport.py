@@ -1,4 +1,4 @@
-"""Asyncio transports for Spinel: Serial (pyserial-asyncio) and TCP.
+"""Asyncio transports for Spinel: Serial (serialx) and TCP.
 
 All transports expose the same async interface:
     await transport.open()
@@ -13,7 +13,7 @@ import asyncio
 from abc import ABC, abstractmethod
 from typing import Self
 
-import serial_asyncio  # type: ignore[import-untyped]
+import serialx
 
 from .errors import SpinelTransportError
 
@@ -43,7 +43,7 @@ class SpinelTransport(ABC):
 
 
 class SerialTransport(SpinelTransport):
-    """USB-UART serial transport via pyserial-asyncio."""
+    """USB-UART serial transport via serialx."""
 
     def __init__(
         self,
@@ -64,7 +64,7 @@ class SerialTransport(SpinelTransport):
 
     async def open(self) -> None:
         try:
-            self._reader, self._writer = await serial_asyncio.open_serial_connection(
+            self._reader, self._writer = await serialx.open_serial_connection(
                 url=self.port,
                 baudrate=self.baudrate,
                 bytesize=self.bytesize,
